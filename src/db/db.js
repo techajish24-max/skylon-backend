@@ -5,7 +5,9 @@ dotenv.config();
 
 const { Pool } = pkg;
 
-//For local development, you can use the following configuration. Make sure to set the environment variables in your .env file accordingly.
+//For local development, you can use the following configuration.
+// i0
+// Make sure to set the environment variables in your .env file accordingly.
 // const pool = new Pool({
 //   user: process.env.DB_USER,
 //   host: process.env.DB_HOST,
@@ -14,6 +16,8 @@ const { Pool } = pkg;
 //   port: process.env.DB_PORT,
 // });
 
+//For production development, you can use the following configuration.
+//Make sure to set the environment variables in your .env file accordingly.
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
