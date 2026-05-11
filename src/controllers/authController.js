@@ -4,7 +4,7 @@ import pool from "../db/db.js";
 
 export const registerUser = async (req, res) => {
   try {
-    const { name, email, mobile, password } = req.body;
+    const { name, email, mobile, flat_number, password } = req.body;
 
     // MOBILE VALIDATION
 
@@ -40,14 +40,15 @@ export const registerUser = async (req, res) => {
           name,
           email,
           mobile,
+          flat_number,
           password,
           role
         )
         VALUES
-        ($1, $2, $3, $4, $5)
+        ($1, $2, $3, $4, $5, $6)
         RETURNING *
         `,
-      [name, email, mobile, hashedPassword, "admin"],
+      [name, email, mobile, flat_number, hashedPassword, "admin"],
     );
 
     res.status(201).json({
