@@ -29,7 +29,7 @@ export const registerUser = async (req, res) => {
 
     // HASH PASSWORD
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 6);
 
     // INSERT USER
 
