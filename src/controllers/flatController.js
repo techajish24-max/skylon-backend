@@ -15,7 +15,7 @@ export const createFlat = async (req, res) => {
     } = req.body;
 
     const newFlat = await pool.query(
-      `INSERT INTO flats
+      `INSERT INTO flats_uat
       (
         flat_number,
         owner_name,
@@ -58,7 +58,7 @@ export const createFlat = async (req, res) => {
 
 export const getFlats = async (req, res) => {
   try {
-    const flats = await pool.query("SELECT * FROM flats ORDER BY id ASC");
+    const flats = await pool.query("SELECT * FROM flats_uat ORDER BY id ASC");
 
     res.json(flats.rows);
   } catch (error) {
@@ -87,7 +87,7 @@ export const updateFlat = async (req, res) => {
     } = req.body;
 
     const updatedFlat = await pool.query(
-      `UPDATE flats
+      `UPDATE flats_uat
        SET
          flat_number = $1,
          owner_name = $2,
@@ -131,7 +131,7 @@ export const deleteFlat = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await pool.query("DELETE FROM flats WHERE id = $1", [id]);
+    await pool.query("DELETE FROM flats_uat WHERE id = $1", [id]);
 
     res.json({
       message: "Flat deleted successfully",
