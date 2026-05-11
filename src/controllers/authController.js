@@ -17,7 +17,7 @@ export const registerUser = async (req, res) => {
     // CHECK EXISTING USER
 
     const existingUser = await pool.query(
-      "SELECT * FROM users WHERE email = $1 OR mobile = $2",
+      "SELECT * FROM users_uat WHERE email = $1 OR mobile = $2",
       [email, mobile],
     );
 
@@ -35,7 +35,7 @@ export const registerUser = async (req, res) => {
 
     const newUser = await pool.query(
       `
-        INSERT INTO users
+        INSERT INTO users_uat
         (
           name,
           email,
@@ -69,7 +69,7 @@ export const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     // Check user
-    const user = await pool.query("SELECT * FROM users WHERE email = $1", [
+    const user = await pool.query("SELECT * FROM users_uat WHERE email = $1", [
       email,
     ]);
 
