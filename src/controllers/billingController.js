@@ -20,7 +20,7 @@ export const createBill = async (req, res) => {
       Number(penalty_amount);
 
     const newBill = await pool.query(
-      `INSERT INTO maintenance_bills
+      `INSERT INTO maintenance_bills_uat
       (
         flat_id,
         bill_month,
@@ -68,7 +68,7 @@ export const getBills = async (req, res) => {
         maintenance_bills.*,
         flats.flat_number,
         flats.owner_name
-      FROM maintenance_bills
+      FROM maintenance_bills_uat
       INNER JOIN flats
       ON maintenance_bills.flat_id = flats.id
       ORDER BY maintenance_bills.id DESC`,
@@ -103,7 +103,7 @@ export const updateBill = async (req, res) => {
 
     const updatedBill = await pool.query(
       `
-        UPDATE maintenance_bills
+        UPDATE maintenance_bills_uat
         SET
           flat_id = $1,
           bill_month = $2,
@@ -150,7 +150,7 @@ export const deleteBill = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await pool.query("DELETE FROM maintenance_bills WHERE id = $1", [id]);
+    await pool.query("DELETE FROM maintenance_bills_uat WHERE id = $1", [id]);
 
     res.json({
       message: "Bill deleted successfully",
