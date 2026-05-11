@@ -3,7 +3,7 @@ import pool from "../db/db.js";
 export const getDashboardStats = async (req, res) => {
   try {
     // Total Flats
-    const totalFlats = await pool.query("SELECT COUNT(*) FROM flats");
+    const totalFlats = await pool.query("SELECT COUNT(*) FROM flats_uat");
 
     // Total Residents
     const totalResidents = await pool.query(
@@ -12,7 +12,7 @@ export const getDashboardStats = async (req, res) => {
 
     // Total Bills
     const totalBills = await pool.query(
-      "SELECT COUNT(*) FROM maintenance_bills",
+      "SELECT COUNT(*) FROM maintenance_bills_uat",
     );
 
     // Total Collections
@@ -23,7 +23,7 @@ export const getDashboardStats = async (req, res) => {
               SUM(amount_paid),
               0
             )
-          FROM payments
+          FROM payments_uat
           `,
     );
 
@@ -32,7 +32,7 @@ export const getDashboardStats = async (req, res) => {
       `
           SELECT
             COUNT(*) AS pending
-          FROM maintenance_bills
+          FROM maintenance_bills_uat
           WHERE payment_status =
             'pending'
           `,
@@ -43,7 +43,7 @@ export const getDashboardStats = async (req, res) => {
       `
           SELECT
             COUNT(*) AS paid
-          FROM maintenance_bills
+          FROM maintenance_bills_uat
           WHERE payment_status =
             'paid'
           `,
@@ -60,7 +60,7 @@ export const getDashboardStats = async (req, res) => {
 
             SUM(amount_paid) AS total
 
-          FROM payments
+          FROM payments_uat
 
           GROUP BY month
 
@@ -74,7 +74,7 @@ export const getDashboardStats = async (req, res) => {
       `
           SELECT
             COUNT(*) AS occupied
-          FROM flats
+          FROM flats_uat
           WHERE occupancy_status =
             'occupied'
           `,
@@ -85,7 +85,7 @@ export const getDashboardStats = async (req, res) => {
       `
           SELECT
             COUNT(*) AS vacant
-          FROM flats
+          FROM flats_uat
           WHERE occupancy_status =
             'vacant'
           `,
