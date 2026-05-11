@@ -8,7 +8,7 @@ export const createReceipt = async (req, res) => {
     const receipt_number = `RCT-${Date.now()}`;
 
     const newReceipt = await pool.query(
-      `INSERT INTO receipts
+      `INSERT INTO receipts_uat
       (
         payment_id,
         receipt_number,
@@ -39,44 +39,44 @@ export const getReceipts = async (req, res) => {
       `
         SELECT
 
-          receipts.id,
+          receipts_uat.id,
 
-          receipts.receipt_number,
+          receipts_uat.receipt_number,
 
-          receipts.receipt_date,
+          receipts_uat.receipt_date,
 
-          payments.amount_paid,
+          payments_uat.amount_paid,
 
-          payments.payment_mode,
+          payments_uat.payment_mode,
 
-          payments.payment_date,
+          payments_uat.payment_date,
 
-          flats.flat_number,
+          flats_uat.flat_number,
 
-          flats.owner_name,
+          flats_uat.owner_name,
 
-          maintenance_bills.maintenance_amount,
+          maintenance_bills_uat.maintenance_amount,
 
-          maintenance_bills.water_charges,
+          maintenance_bills_uat.water_charges,
 
-          maintenance_bills.parking_charges,
+          maintenance_bills_uat.parking_charges,
 
-          maintenance_bills.penalty_amount,
+          maintenance_bills_uat.penalty_amount,
 
-          maintenance_bills.total_amount
+          maintenance_bills_uat.total_amount
 
-        FROM receipts
+        FROM receipts_uat
 
-        INNER JOIN payments
-        ON receipts.payment_id = payments.id
+        INNER JOIN payments_uat
+        ON receipts_uat.payment_id = payments_uat.id
 
-        INNER JOIN maintenance_bills
-        ON payments.bill_id = maintenance_bills.id
+        INNER JOIN maintenance_bills_uat
+        ON payments_uat.bill_id = maintenance_bills_uat.id
 
-        INNER JOIN flats
-        ON maintenance_bills.flat_id = flats.id
+        INNER JOIN flats_uat
+        ON maintenance_bills_uat.flat_id = flats_uat.id
 
-        ORDER BY receipts.id DESC
+        ORDER BY receipts_uat.id DESC
         `,
     );
 
@@ -94,7 +94,7 @@ export const deleteReceipt = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await pool.query("DELETE FROM receipts WHERE id = $1", [id]);
+    await pool.query("DELETE FROM receipts_uat WHERE id = $1", [id]);
 
     res.json({
       message: "Receipt deleted successfully",
