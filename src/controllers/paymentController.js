@@ -13,7 +13,7 @@ export const createPayment = async (req, res) => {
 
     // Insert payment
     const newPayment = await pool.query(
-      `INSERT INTO payments
+      `INSERT INTO payments_uat
       (
         bill_id,
         amount_paid,
@@ -83,7 +83,7 @@ export const getPayments = async (req, res) => {
         maintenance_bills.bill_year,
         flats.flat_number,
         flats.owner_name
-      FROM payments
+      FROM payments_uat
 
       INNER JOIN maintenance_bills
       ON payments.bill_id = maintenance_bills.id
@@ -119,7 +119,7 @@ export const updatePayment = async (req, res) => {
 
     const updatedPayment = await pool.query(
       `
-        UPDATE payments
+        UPDATE payments_uat
         SET
           bill_id = $1,
           amount_paid = $2,
@@ -158,7 +158,7 @@ export const deletePayment = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await pool.query("DELETE FROM payments WHERE id = $1", [id]);
+    await pool.query("DELETE FROM payments_uat WHERE id = $1", [id]);
 
     res.json({
       message: "Payment deleted successfully",
