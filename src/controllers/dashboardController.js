@@ -6,7 +6,9 @@ export const getDashboardStats = async (req, res) => {
     const totalFlats = await pool.query("SELECT COUNT(*) FROM flats");
 
     // Total Residents
-    const totalResidents = await pool.query("SELECT COUNT(*) FROM residents");
+    const totalResidents = await pool.query(
+      "SELECT COUNT(*) FROM residents_uat",
+    );
 
     // Total Bills
     const totalBills = await pool.query(

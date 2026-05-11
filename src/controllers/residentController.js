@@ -12,7 +12,7 @@ export const createResident = async (req, res) => {
     } = req.body;
 
     const newResident = await pool.query(
-      `INSERT INTO residents
+      `INSERT INTO residents_uat
       (
         flat_id,
         resident_name,
@@ -49,7 +49,7 @@ export const getResidents = async (req, res) => {
 
           flats.flat_number
 
-        FROM residents
+        FROM residents_uat
 
         INNER JOIN flats
         ON residents.flat_id = flats.id
@@ -83,7 +83,7 @@ export const updateResident = async (req, res) => {
 
     const updatedResident = await pool.query(
       `
-        UPDATE residents
+        UPDATE residents_uat
         SET
           flat_id = $1,
           resident_name = $2,
@@ -122,7 +122,7 @@ export const deleteResident = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await pool.query("DELETE FROM residents WHERE id = $1", [id]);
+    await pool.query("DELETE FROM residents_uat WHERE id = $1", [id]);
 
     res.json({
       message: "Resident deleted successfully",
