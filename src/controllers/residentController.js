@@ -45,16 +45,16 @@ export const getResidents = async (req, res) => {
     const residents = await pool.query(
       `
         SELECT
-          residents.*,
+          residents_uat.*,
 
-          flats.flat_number
+          flats_uat.flat_number
 
         FROM residents_uat
 
-        INNER JOIN flats
-        ON residents.flat_id = flats.id
+        INNER JOIN flats_uat
+        ON residents_uat.flat_id = flats_uat.id
 
-        ORDER BY residents.id DESC
+        ORDER BY residents_uat.id DESC
         `,
     );
 

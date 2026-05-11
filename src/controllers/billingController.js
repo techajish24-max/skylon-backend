@@ -65,13 +65,13 @@ export const getBills = async (req, res) => {
   try {
     const bills = await pool.query(
       `SELECT
-        maintenance_bills.*,
-        flats.flat_number,
-        flats.owner_name
+        maintenance_bills_uat.*,
+        flats_uat.flat_number,
+        flats_uat.owner_name
       FROM maintenance_bills_uat
-      INNER JOIN flats
-      ON maintenance_bills.flat_id = flats.id
-      ORDER BY maintenance_bills.id DESC`,
+      INNER JOIN flats_uat
+      ON maintenance_bills_uat.flat_id = flats_uat.id
+      ORDER BY maintenance_bills_uat.id DESC`,
     );
 
     res.json(bills.rows);

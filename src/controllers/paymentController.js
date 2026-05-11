@@ -55,7 +55,7 @@ export const createPayment = async (req, res) => {
 
     // Update bill status
     await pool.query(
-      `UPDATE maintenance_bills
+      `UPDATE maintenance_bills_uat
        SET payment_status = 'paid'
        WHERE id = $1`,
       [bill_id],
@@ -78,20 +78,20 @@ export const getPayments = async (req, res) => {
   try {
     const payments = await pool.query(
       `SELECT
-        payments.*,
-        maintenance_bills.bill_month,
-        maintenance_bills.bill_year,
-        flats.flat_number,
-        flats.owner_name
+        payments_uat.*,
+        maintenance_bills_uat.bill_month,
+        maintenance_bills_uat.bill_year,
+        flats_uat.flat_number,
+        flats_uat.owner_name
       FROM payments_uat
 
-      INNER JOIN maintenance_bills
-      ON payments.bill_id = maintenance_bills.id
+      INNER JOIN maintenance_bills_uat
+      ON payments_uat.bill_id = maintenance_bills_uat.id
 
-      INNER JOIN flats
-      ON maintenance_bills.flat_id = flats.id
+      INNER JOIN flats_uat
+      ON maintenance_bills_uat.flat_id = flats_uat.id
 
-      ORDER BY payments.id DESC`,
+      ORDER BY payments_uat.id DESC`,
     );
 
     res.json(payments.rows);
