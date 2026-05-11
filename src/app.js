@@ -18,6 +18,22 @@ app.get("/", (req, res) => {
   res.send("Skylon Society API Running");
 });
 
+app.get("/test-db", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT NOW()");
+
+    res.json({
+      success: true,
+      data: result.rows,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message,
+    });
+  }
+});
+
 app.use("/api/auth", authRoutes);
 app.use("/api/flats", flatRoutes);
 app.use("/api/residents", residentRoutes);
