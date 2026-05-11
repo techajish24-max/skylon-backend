@@ -4,13 +4,21 @@ import pool from "../db/db.js";
 
 export const registerUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, mobile, password } = req.body;
+
+    // MOBILE VALIDATION
+
+    if (!/^\d{10}$/.test(String(mobile).trim())) {
+      return res.status(400).json({
+        message: "Mobile number must be exactly 10 digits",
+      });
+    }
 
     // CHECK EXISTING USER
 
     const existingUser = await pool.query(
-      "SELECT * FROM users WHERE email = $1",
-      [email],
+      "SELECT * FROM users WHERE email = $1 OR mobile = $2",
+      [email, mobile],
     );
 
     if (existingUser.rows.length > 0) {
@@ -31,14 +39,15 @@ export const registerUser = async (req, res) => {
         (
           name,
           email,
+          mobile,
           password,
           role
         )
         VALUES
-        ($1, $2, $3, $4)
+        ($1, $2, $3, $4, $5)
         RETURNING *
         `,
-      [name, email, hashedPassword, "admin"],
+      [name, email, mobile, hashedPassword, "admin"],
     );
 
     res.status(201).json({
@@ -99,6 +108,7 @@ export const loginUser = async (req, res) => {
         name: user.rows[0].name,
         email: user.rows[0].email,
         role: user.rows[0].role,
+        mobile: user.rows[0].mobile,
       },
     });
   } catch (error) {
