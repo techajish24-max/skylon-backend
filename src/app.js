@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import pool from "../src/db/db.js";
+import pool from "./db/db.js";
 
 import authRoutes from "./routes/authRoutes.js";
 import flatRoutes from "./routes/flatRoutes.js";
@@ -9,6 +9,7 @@ import billingRoutes from "./routes/billingRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 import receiptRoutes from "./routes/receiptRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
+import visitorRoutes from "./routes/visitorRoutes.js";
 
 const app = express();
 
@@ -17,6 +18,10 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Skylon Society API Running");
+});
+
+app.get("/hello", (req, res) => {
+  res.send("HELLO WORKING");
 });
 
 app.get("/test-db", async (req, res) => {
@@ -42,5 +47,6 @@ app.use("/api/bills", billingRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/receipts", receiptRoutes);
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/visitors", visitorRoutes);
 
 export default app;

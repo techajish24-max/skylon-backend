@@ -6,7 +6,6 @@ dotenv.config();
 const { Pool } = pkg;
 
 //For local development, you can use the following configuration.
-// i0
 // Make sure to set the environment variables in your .env file accordingly.
 // const pool = new Pool({
 //   user: process.env.DB_USER,
